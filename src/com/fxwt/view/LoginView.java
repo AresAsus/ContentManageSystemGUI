@@ -9,30 +9,29 @@ import java.io.IOException;
 
 public class LoginView {
     public void creatJf() throws IOException {
-    	
-        /*  //使用awt工具箱
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        Image image = tk.getImage("com/qiku/work/work0926/img.jpg");*/
-        //创建JFrame实例
+//      	创建顶层窗口
         JFrame frame = new JFrame("管理系统登入界面");
 //        frame.setFont(new Font("华文楷体", 0, 13));
-        //设置窗体宽高
+//        设置窗体宽高
         frame.setSize(350, 200);
         //设置窗口居中显示
         frame.setLocationRelativeTo(null); 
         //设置关闭窗口结束程序
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //设置窗体禁止调节大小
+//        设置窗体禁止调节大小
         frame.setResizable(true);
         //改变窗口默认图标
         Image image = ImageIO.read(new File("src/static/image/login.jpg"));
         frame.setIconImage(image);
-        //创建面板
-        JPanel jPanel = new JPanel();
-        //布局设置为空，之后可以手动设置组件的坐标位置和大小
-        jPanel.setLayout(null); 
+  
+//      卡片式布局的面板
+    	JPanel cards=new JPanel(new CardLayout());
+//    	登入面板
+    	JPanel login=new JPanel();
+//    	注册面板
+    	JPanel register=new JPanel();
         
-        //创建JLabel(用户名)
+//        创建JLabel(用户名)
         JLabel user_label = new JLabel("用户名:");
 //        user_label.setFont(new Font("华文楷体", 0, 13));
         //定义组件的位置和宽高

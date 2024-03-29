@@ -18,10 +18,10 @@ public class StartSwingApp extends JFrame {
 					UIManager.put("Menu.font", font);
 					UIManager.put("MenuItem.font", font);
 					UIManager.put("MenuItemUI.font", font);
-					
+//					UIManager.put("TitledBorder.font", font);
 					LoginView newView = new LoginView();
 					newView.creatJf();
-					System.out.println(" -----  Ending the management system  ------ ");
+//					System.out.println(" -----  Ending the management system  ------ ");
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
