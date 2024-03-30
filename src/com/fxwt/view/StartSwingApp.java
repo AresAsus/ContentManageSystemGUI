@@ -13,7 +13,7 @@ public class StartSwingApp extends JFrame {
 			public void run() {
 				try {
 					System.out.println(" ----- Starting the management system ------ ");
-					Font font = new Font("华文楷体",Font.PLAIN,15);
+					Font font = new Font("华文楷体",Font.PLAIN,16);
 					UIManager.put("Button.font", font); 
 					UIManager.put("Menu.font", font);
 					UIManager.put("MenuItem.font", font);
