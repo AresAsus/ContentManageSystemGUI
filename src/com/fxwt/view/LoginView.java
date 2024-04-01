@@ -1,94 +1,128 @@
-package com.fxwt.view;
+																																																									package com.fxwt.view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import com.formdev.flatlaf.FlatLightLaf;
+import com.fxwt.controller.UserController;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
-public class LoginView {
-    public void creatJf() throws IOException {
+public class LoginView extends JFrame{
+	private UserController userController;
+	
+    public void creatJf()  throws IOException{
+    	
+    	FlatLightLaf.setup();
 //      	创建顶层窗口
         JFrame frame = new JFrame("管理系统登入界面");
-        frame.setFont(new Font("华文楷体", 0, 13));
 //        设置窗体宽高
         frame.setSize(350, 200);
-        //设置窗口居中显示
-        frame.setLocationRelativeTo(null); 
-        //改变窗口默认图标
+//    	卡片布局
+        JPanel cards=new JPanel(new CardLayout ());
+//    	登录窗口
+    	JPanel loginWindow=new JPanel();
+    	
+//    	loginWindow.setSize(getPreferredSize());
+//    	注册窗口
+    	JPanel registerWindow=new JPanel();
+//    	找回密码
+    	JPanel retrieveWindow=new JPanel();
+
+//        改变窗口默认图标
         Image image = ImageIO.read(new File("src/static/image/login.jpg"));
         frame.setIconImage(image);
   
-//      卡片式布局的面板
-    	JPanel cards=new JPanel(new CardLayout());
-//    	登入面板
-    	JPanel loginView=new JPanel();
-//    	注册面板
-    	JPanel registerView=new JPanel();
-//    	找回密码
-    	JPanel retrieveView=new JPanel();
-        
+//    	用户栏
+    	JPanel userPanel=new JPanel();
+//    	密码栏
+    	JPanel pwdPanel=new JPanel();
+//    	按钮栏
+    	JPanel butPanel=new JPanel();
+    	
 //        创建JLabel(用户名)
-        JLabel user_label = new JLabel("用户名:");
-//        user_label.setFont(new Font("华文楷体", 0, 13));
-        //定义组件的位置和宽高
-//        user_label.setBounds(10, 20, 80, 25);
-        //把组件添加到JPanel上
-        loginView.add(user_label);
-
-        //创建文本域用于用户输入
+    	JLabel user_label=new JLabel("用户名:");
+//        创建文本域用于用户输入
         JTextField user_text = new JTextField(10);
-        //设置文本域的位置和宽高
-//        user_text.setBounds(100, 20, 165, 25);
-        //把文本域组件添加上
-        loginView.add(user_text);
 
-        //创建JLabel(密码)
-        JLabel password_label = new JLabel("密码:");
-//        password_label.setFont(new Font("华文楷体", 0, 13));
-        //设置位置和大小
-//        password_label.setBounds(10, 50, 80, 25);
-        //添加组件
-        loginView.add(password_label);
+        //        创建JLabel(密码)
+        JLabel password_label = new JLabel("密   码:");
+//        密码文本域输入
+        JPasswordField password_text = new JPasswordField(10);
+        password_text.setEchoChar('*');
+//      添加显示密码图标按钮
+      JButton showPassWordBtn = new JButton(new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("./static/image/show.gif"))));
+//      添加隐藏密码图标按钮
+      JButton hidePassWordBtn = new JButton(new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("./static/image/hide.gif"))));
+//      将图标按钮添加进密码框里面，需要使用FlatLightLaf主题库
+      password_text.putClientProperty("JTextField.trailingComponent", showPassWordBtn);
+       
+//      给显示密码图标绑定单击事件
+      showPassWordBtn.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+          	 password_text.putClientProperty("JTextField.trailingComponent", hidePassWordBtn);//设置隐藏按钮显示，未使用FlatLightLaf则不需要
+               password_text.setEchoChar((char) 0);//设置密码显示
+           }
+      });
+      //给隐藏密码图标绑定单击事件
+      hidePassWordBtn.addActionListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+          	   password_text.putClientProperty("JTextField.trailingComponent", showPassWordBtn);//设置显示按钮显示，未使用FlatLightLaf则不需要
+          	   password_text.setEchoChar('*');//设置密码隐藏
+             }
+      });
 
-        //密码文本域输入
-        JPasswordField password_text = new JPasswordField(10);  
-        //密码输入框，输入密码自动隐藏
-//        JTextField password_text = new JTextField(10);
-//        password_text.setBounds(100, 50, 165, 25);
-        loginView.add(password_text);
-
-
-        //登录按钮
+//        登录按钮
         JButton loginBut = new JButton("登录");
-        loginBut.setBounds(80, 100, 80, 25);
-
-
-        //注册按钮
+//        注册按钮
         JButton registerBut = new JButton("注册");
-        registerBut.setBounds(200, 100, 80, 25);
-
-        registerView.add(registerBut);
-        registerView.add(registerBut);
-        cards.add(loginView);
-        cards.add(registerView);
-        cards.add(retrieveView);
+//        忘记密码
+        JButton retrieveBut = new JButton("忘记密码");
+        
+        loginWindow.setLayout(new GridLayout(4,1,0,0));
+        loginWindow.setPreferredSize(new Dimension(50, 20));
+        
+//      组装用户名栏
+      userPanel.add(user_label);
+      userPanel.add(user_text);
+//      组装密码栏
+      pwdPanel.add(password_label);
+      pwdPanel.add(password_text);
+      
+//        组装按钮栏
+//        butPanel.add(loginBut);
+        butPanel.add(registerBut);
+        butPanel.add(retrieveBut);
+        
+//        组装到登录窗口
+        loginWindow.add(userPanel);
+        loginWindow.add(pwdPanel);
+        loginWindow.add(loginBut);
+        loginWindow.add(butPanel);
+        
+//        组装到卡片
+        cards.add(loginWindow);
+        cards.add(registerWindow);
+        cards.add(retrieveWindow);
+        
         frame.add(cards);
         
-      //设置可见
+//      设置窗体宽高
+        frame.setSize(350, 200);
+//    设置窗口居中显示
+        frame.setLocationRelativeTo(null); 
+//      设置可见
         frame.setVisible(true);
         LoginListener ll = new LoginListener(frame, user_text, password_text);
         loginBut.addActionListener(ll);
     }
 
-    public class ReListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        	RegisterView.reShow();
-        }
-    }
 
     public class LoginListener implements ActionListener {
         private javax.swing.JTextField jt;//账号输入框对象
@@ -110,7 +144,7 @@ public class LoginView {
                 HomePage.createShow();
                 login.setVisible(false);
             } else if (!(jt.getText().equals("1") && jp.getText().equals("1"))) {
-                JOptionPane.showMessageDialog(null, "登录名或密码错误", "失败", 0);
+                JOptionPane.showMessageDialog(null, "用户名或密码错误", "失败", 0);
             }
 
         }
